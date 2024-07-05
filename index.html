@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter Password</title>
+  <style>
+    body, html {
+    background: linear-gradient(135deg,#2600ff, #158cff, #000000,#0e0f51,#7a00ff, #b900ff);
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #container {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1; /* Ensure the container is behind the form */
+      overflow: hidden; /* Hide overflow of the 3D object */
+    }
+
+    .background-image {
+      display: none; /* Initially hide the image */
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* Ensure the image covers the entire container */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .spline-viewer {
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover; /* Ensure the 3D object covers the entire container */
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .password-form {
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.10);
+      border-radius: 20px;
+      color: white;
+      width: 250px;
+      backdrop-filter: blur(1.5px);
+      animation: slideInForm 1s ease forwards;
+      box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 1; /* Ensure the form is above the 3D object */
+    }
+
+    @keyframes slideInForm {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    input[type="password"], input[type="text"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #eaeaff;
+      border-radius: 5px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      background: transparent;
+      color: white;
+      outline: none;
+    }
+
+    input[type="password"]:focus, input[type="text"]:focus {
+      border-color: white;
+      animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
+    button {
+      width: calc(100% - 20px);
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: true;
+      border-color: white;
+      border-radius: 11px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: transparent;
+      padding: 10px;
+      color: red;
+      border-color: #7b2bff;
+    }
+
+    h2 {
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-align: center;
+    }
+
+    .popup-box {
+      position: fixed;
+      bottom: 22px;
+      right: 15px;
+      background-color: rgba(0, 0, 0, 1.10);
+      border: 1px solid #eaeaff;
+      border-radius: 10px;
+      padding: 7px;
+      width: 130px;
+      box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.5);
+      color: white;
+      text-align: center;
+      backdrop-filter: blur(1.5px);
+      z-index: 2;
+      animation: slideInPopup 1s ease forwards;
+    }
+
+    @keyframes slideInPopup {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Media query for mobile devices */
+    @media only screen and (max-width: 768px) {
+      .spline-viewer {
+        display: none;
+      }
+      .background-image {
+        display: block;
+      }
+      .popup-box {
+        display: none; /* Hide popup box on mobile devices */
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <spline-viewer class="spline-viewer" url="https://prod.spline.design/Wiz1a2dAb6LE1xPU/scene.splinecode"></spline-viewer>
+    <!-- Replace background.jpg with your image -->
+  </div>
+
+  <div class="password-form">
+    <h2 class="w">Welcome</h2>
+    <p style="text-align: center;">Please enter the password to access the site.</p>
+    <input type="password" id="password" placeholder="Enter Password">
+    <button onclick="checkPassword()">Submit</button>
+  </div>
+
+  <div class="popup-box" id="popupBox">
+  <!-- Display current time here -->
+  <span id="currentTime"></span>
+</div>
+
+
+  <script>
+    function checkPassword() {
+      const passwordInput = document.getElementById('password').value;
+      if (passwordInput === 'abir.enter') {
+        window.location.href = 'https://shahariahtml.github.io/shaharia_chipcollection1190148/';  // Replace with your desired link
+      } else {
+        alert('Incorrect password. Please try again.');
+        document.getElementById('password').value = '';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const popupBox = document.getElementById('popupBox');
+      const passwordInput = document.getElementById('password');
+      const isMobile = window.matchMedia("only screen and (max-width: 768px)").matches;
+      
+      if (!isMobile) {
+        popupBox.style.display = 'block'; // Show the popup box only on larger screens
+      }
+
+      passwordInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          checkPassword();
+        }
+      });
+    });
+  </script>
+
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.6.0/build/spline-viewer.js"></script>
+
+
+<script>
+  function updateTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  function updatePopupTime() {
+    const currentTimeSpan = document.getElementById('currentTime');
+    if (currentTimeSpan) {
+      currentTimeSpan.textContent = updateTime();
+    }
+  }
+
+  // Update time initially
+  updatePopupTime();
+
+  // Update time every second
+  setInterval(updatePopupTime, 1000);
+</script>
+
+
+</body>
+</html>
